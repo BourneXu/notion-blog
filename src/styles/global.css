@@ -138,21 +138,21 @@ article .zh-han {
 }
 
 .post-item a {
-  display: inline;
+  display: inline-block;
   margin-right: 1rem;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 500;
-  color: black;
+  color: rgb(17, 17, 17);
   letter-spacing: -0.02em;
   text-decoration: none;
 }
 
 .post-item time {
   margin: auto;
-  color: #666;
-  font-size: .8rem;
+  color: rgb(153, 153, 153);
+  font-size: .9rem;
   line-height: 2em;
-  text-align: right;
+  float: right;
 }
 
 .media-container {
@@ -192,6 +192,7 @@ header nav div a {
 }
 
 header nav div a.active {
+  color: #999;
   text-decoration: none;
   cursor: default;
 }
