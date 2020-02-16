@@ -1,12 +1,13 @@
-import React from 'react'
 import Head from 'next/head'
-
-import Header from '../../components/header'
+import React from 'react'
 import Content from '../../components/content'
-
-import getPageData from '../../lib/notion/getPageData'
-import getBlogIndex from '../../lib/notion/getBlogIndex'
+import Header from '../../components/header'
 import { getBlogLink, getDateStr } from '../../lib/blog-helpers'
+import getBlogIndex from '../../lib/notion/getBlogIndex'
+import getNotionUsers from '../../lib/notion/getNotionUsers'
+import getPageData from '../../lib/notion/getPageData'
+
+
 
 // Get the data for each blog post
 export async function unstable_getStaticProps({ params: { slug } }) {
@@ -25,7 +26,8 @@ export async function unstable_getStaticProps({ params: { slug } }) {
   }
   const postData = await getPageData(post.id)
   post.content = postData.blocks
-  post.Authors = ['Shu Ding']
+  const { users } = await getNotionUsers(post.Authors || [])
+  post.Authors = Object.keys(users).map(id => users[id].full_name)
 
   // const { users } = await getNotionUsers(post.Authors || [])
   // post.Authors = Object.keys(users).map(id => users[id].full_name)
@@ -65,7 +67,7 @@ const RenderPost = ({ post, redirect }) => {
           <div className="meta">{post.Authors.join(' ')}, {getDateStr(post.Date)}</div>
         </Header>
 
-        <Content blocks={post.content || []}/>
+        <Content blocks={post.content || []} />
       </article>
     </>
   )

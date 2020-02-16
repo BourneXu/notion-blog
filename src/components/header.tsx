@@ -1,12 +1,12 @@
-import Link from 'next/link'
 import Head from 'next/head'
-import ExtLink from './ext-link'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
+import ExtLink from './ext-link'
 
 const navItems: { label: string; page?: string; link?: string }[] = [
+  // TODO: Modify navItems
+  { label: 'About', page: '/' },
   { label: 'Blog', page: '/blog' },
-  { label: 'Visual', link: 'https://works.shud.in' },
-  { label: 'About', page: '/' }
 ]
 
 const ogImageUrl = 'https://notion-blog.now.sh/og-image.png'
@@ -16,12 +16,12 @@ export default ({ title = '', children = null }) => {
 
   return <>
     <Head>
-      <title>{title || 'Shu'}</title>
+      <title>{title || 'Chao'}</title>
       <meta
         name="description"
-        content="Shu’s thoughts"
+        content="Chao's blogs"
       />
-      <meta name="og:title" content="Shu" />
+      {/* <meta name="og:title" content="Chao" /> */}
     </Head>
     <header>
       <div>{children}</div>
@@ -41,8 +41,8 @@ export default ({ title = '', children = null }) => {
                 </a>
               </Link>
             ) : (
-              <ExtLink href={link}>{label}</ExtLink>
-            )}
+                <ExtLink href={link}>{label}</ExtLink>
+              )}
           </div>
         ))}
       </nav>

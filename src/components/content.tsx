@@ -1,12 +1,19 @@
-import React from 'react'
 import ReactJSXParser from '@zeit/react-jsx-parser'
-
-import Heading from './heading'
-import components from './dynamic'
-
+import React from 'react'
 import { textBlock } from '../lib/notion/renderers'
+import components from './dynamic'
+import Heading from './heading'
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'marquee': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    }
+  }
+}
 
 const listTypes = new Set(['bulleted_list', 'numbered_list'])
+
 
 export default function Content({ blocks }) {
   let listTagName: string | null = null
@@ -56,8 +63,13 @@ export default function Content({ blocks }) {
 
       switch (type) {
         case 'page':
+        case 'callout':
+          if (properties) {
+            toRender.push(<marquee>{properties.title}</marquee>)
+          }
+          break
         case 'divider':
-          toRender.push(<hr />)
+          toRender.push()
           break
         case 'text':
           if (properties) {
@@ -67,7 +79,7 @@ export default function Content({ blocks }) {
         case 'image':
         case 'video': {
           const { format = {}, properties: { caption } } = value
-          
+
           const isImage = type === 'image'
           const Comp = isImage ? 'img' : 'video'
 
@@ -146,5 +158,5 @@ export default function Content({ blocks }) {
       }
       return toRender
     })}
-  </div>
+  </div >
 }

@@ -1,3 +1,3 @@
 # Notion Blog
 
-Forked from [ijjk/notion-blog](https://github.com/ijjk/notion-blog).
+Forked from [quietshu/notion-blog](https://github.com/quietshu/notion-blog).

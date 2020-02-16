@@ -1,11 +1,10 @@
-import Link from 'next/link'
-
-import Header from '../components/header'
 import Content from '../components/content'
-
+import Header from '../components/header'
+import getPageData from '../lib/notion/getPageData'
 import { BLOG_INDEX_ID } from '../lib/notion/server-constants'
 
-import getPageData from '../lib/notion/getPageData'
+
+
 
 export async function unstable_getStaticProps() {
   const postData = await getPageData(BLOG_INDEX_ID, 2)
@@ -22,9 +21,9 @@ export async function unstable_getStaticProps() {
 export default ({ post }) => {
   return (
     <article>
-      <h1>Shu Ding</h1>
-      <Header title="Shu Ding" />
-      <Content blocks={post.content || []}/>
+      <h1>Chao Xu</h1>
+      <Header title="Chao Xu | About" />
+      <Content blocks={post.content || []} />
     </article>
   )
 }
