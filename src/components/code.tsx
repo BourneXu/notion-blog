@@ -25,7 +25,12 @@ const Code = ({ children, language = 'javascript' }) => {
           padding: 0.8rem;
           line-height: 1.5;
           background: #f5f5f5;
-          font-size: 0.75rem;
+          font-size: 85%;
+          tab-size: 2;
+          flex-shrink: 1;
+          flex-grow: 1;
+          color: rgb(55, 53, 47);
+          text-align: left;
           border-radius: var(--radius);
           overflow: auto;
         }
