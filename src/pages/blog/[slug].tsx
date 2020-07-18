@@ -21,7 +21,6 @@ export async function unstable_getStaticProps({ params: { slug } }) {
       props: {
         redirect: '/blog',
       },
-      revalidate: 5,
     }
   }
   const postData = await getPageData(post.id)
@@ -36,7 +35,6 @@ export async function unstable_getStaticProps({ params: { slug } }) {
     props: {
       post,
     },
-    revalidate: 10,
   }
 }
 
@@ -57,7 +55,9 @@ const RenderPost = ({ post, redirect }) => {
       </>
     )
   }
-
+  if (!post) {
+    return <h1>Oops.</h1>
+  }
   return (
     <>
       <article>

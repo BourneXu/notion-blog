@@ -34,7 +34,6 @@ export async function unstable_getStaticProps() {
     props: {
       posts,
     },
-    revalidate: 10,
   }
 }
 
