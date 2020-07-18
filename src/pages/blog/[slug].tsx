@@ -4,13 +4,10 @@ import Content from '../../components/content'
 import Header from '../../components/header'
 import { getBlogLink, getDateStr } from '../../lib/blog-helpers'
 import getBlogIndex from '../../lib/notion/getBlogIndex'
-import getNotionUsers from '../../lib/notion/getNotionUsers'
 import getPageData from '../../lib/notion/getPageData'
 
-
-
 // Get the data for each blog post
-export async function unstable_getStaticProps({ params: { slug } }) {
+export async function getStaticProps({ params: { slug } }) {
   // load the postsTable so that we can get the page's ID
   const postsTable = await getBlogIndex()
   const post = postsTable[slug]
@@ -25,8 +22,7 @@ export async function unstable_getStaticProps({ params: { slug } }) {
   }
   const postData = await getPageData(post.id)
   post.content = postData.blocks
-  const { users } = await getNotionUsers(post.Authors || [])
-  post.Authors = Object.keys(users).map(id => users[id].full_name)
+  post.Authors = ['Chris Xu']
 
   // const { users } = await getNotionUsers(post.Authors || [])
   // post.Authors = Object.keys(users).map(id => users[id].full_name)
@@ -39,9 +35,14 @@ export async function unstable_getStaticProps({ params: { slug } }) {
 }
 
 // Return our list of blog posts to prerender
-export async function unstable_getStaticPaths() {
+export async function getStaticPaths() {
   const postsTable = await getBlogIndex()
-  return Object.keys(postsTable).map(slug => getBlogLink(slug))
+  return {
+    paths: Object.keys(postsTable)
+      .filter(post => postsTable[post].Published === 'Yes')
+      .map(slug => getBlogLink(slug)),
+    fallback: true,
+  }
 }
 
 const RenderPost = ({ post, redirect }) => {
@@ -55,16 +56,18 @@ const RenderPost = ({ post, redirect }) => {
       </>
     )
   }
-  if (!post) {
-    return <h1>Oops.</h1>
-  }
+
+  if (!post) return <h1>Oops.</h1>
+
   return (
     <>
       <article>
         <h1>{post.Page || ''}</h1>
 
         <Header title={post.Page}>
-          <div className="meta">{post.Authors.join(' ')}, {getDateStr(post.Date)}</div>
+          <div className="meta">
+            {post.Authors.join(' ')}, {getDateStr(post.Date)}
+          </div>
         </Header>
 
         <Content blocks={post.content || []} />
